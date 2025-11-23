@@ -54,7 +54,7 @@ export const Legal: React.FC = () => {
           )}
           
           <div className="pt-8 border-t border-ops-border mt-8">
-            <p className="text-xs">Last Updated: October 2023</p>
+            <p className="text-xs">Last Updated: October 2025</p>
             <p className="text-xs mt-2">Contact: legal@debugops.ai</p>
           </div>
         </div>

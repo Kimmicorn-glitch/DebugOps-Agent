@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useTheme } from '../contexts/ThemeContext';
+import { getApps } from 'firebase/app';
 
 interface SettingsModalProps {
   isOpen: boolean;
@@ -39,6 +40,10 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
   setAutoAnalyze
 }) => {
   const { theme, toggleTheme } = useTheme();
+  const [firebaseConfigInput, setFirebaseConfigInput] = useState('');
+  const [configError, setConfigError] = useState<string | null>(null);
+
+  const isFirebaseConnected = getApps().length > 0;
 
   if (!isOpen) return null;
 
@@ -48,9 +53,40 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
     }
   };
 
+  const handleSaveFirebaseConfig = () => {
+    try {
+      if (!firebaseConfigInput.trim()) return;
+      
+      // Attempt to parse JSON
+      const config = JSON.parse(firebaseConfigInput);
+      
+      // Basic validation
+      if (!config.apiKey || !config.authDomain || !config.projectId) {
+        throw new Error("Invalid configuration object. Missing apiKey, authDomain, or projectId.");
+      }
+
+      // Save to local storage
+      localStorage.setItem('debugOps_firebaseConfig', JSON.stringify(config));
+      
+      // Reload to apply
+      if (window.confirm("Configuration saved! The page must reload to connect to your Firebase project. Reload now?")) {
+        window.location.reload();
+      }
+    } catch (e: any) {
+      setConfigError("Invalid JSON format. Please ensure you copy the object correctly.");
+    }
+  };
+
+  const handleClearFirebaseConfig = () => {
+    if (window.confirm("Disconnect from this Firebase project? You will revert to Demo Mode.")) {
+      localStorage.removeItem('debugOps_firebaseConfig');
+      window.location.reload();
+    }
+  };
+
   return (
     <div className="fixed inset-0 z-50 bg-black/80 flex items-center justify-center p-4 backdrop-blur-sm animate-in fade-in duration-200">
-      <div className="bg-ops-panel border border-ops-border p-6 rounded-lg max-w-md w-full shadow-2xl relative">
+      <div className="bg-ops-panel border border-ops-border p-6 rounded-lg max-w-md w-full shadow-2xl relative max-h-[90vh] overflow-y-auto">
         
         {/* Header */}
         <div className="flex justify-between items-center mb-6 border-b border-ops-border pb-4">
@@ -66,6 +102,57 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
             </svg>
           </button>
+        </div>
+
+        {/* Firebase Connection Section */}
+        <div className="mb-6 space-y-2 p-4 bg-ops-bg/30 rounded border border-ops-border">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center">
+              <label className="text-xs font-mono font-bold text-ops-text-muted uppercase tracking-wider">
+                Firebase Project Link
+              </label>
+              <Tooltip text="Link this app to your own Firebase project for real authentication and data persistence." />
+            </div>
+            {isFirebaseConnected && (
+              <span className="text-[10px] bg-emerald-500/10 text-emerald-500 px-2 py-0.5 rounded border border-emerald-500/20 font-bold uppercase">
+                Connected
+              </span>
+            )}
+          </div>
+          
+          {!isFirebaseConnected ? (
+            <div className="space-y-2">
+              <textarea 
+                rows={3}
+                placeholder='Paste config JSON: {"apiKey": "...", "authDomain": "..."}'
+                value={firebaseConfigInput}
+                onChange={(e) => { setFirebaseConfigInput(e.target.value); setConfigError(null); }}
+                className="w-full bg-ops-bg border border-ops-border rounded p-3 text-ops-text-main focus:border-ops-accent outline-none text-[10px] font-mono transition-colors"
+              />
+              {configError && <p className="text-xs text-rose-500">{configError}</p>}
+              <button 
+                onClick={handleSaveFirebaseConfig}
+                className="w-full py-2 bg-ops-accent text-white rounded text-xs font-bold hover:bg-blue-600 transition-colors"
+              >
+                Connect Project
+              </button>
+              <p className="text-[10px] text-ops-text-dim mt-1">
+                Go to Firebase Console &gt; Project Settings &gt; General &gt; Your Apps to get this config.
+              </p>
+            </div>
+          ) : (
+             <div>
+               <p className="text-xs text-ops-text-main mb-2">
+                 Linked to project ID: <span className="font-mono text-emerald-400">{JSON.parse(localStorage.getItem('debugOps_firebaseConfig') || '{}').projectId || 'Unknown'}</span>
+               </p>
+               <button 
+                 onClick={handleClearFirebaseConfig}
+                 className="px-3 py-1.5 bg-rose-500/10 text-rose-500 border border-rose-500/20 rounded hover:bg-rose-500/20 transition-colors text-xs font-medium w-full"
+               >
+                 Disconnect (Revert to Demo Mode)
+               </button>
+             </div>
+          )}
         </div>
 
         {/* Theme Toggle */}

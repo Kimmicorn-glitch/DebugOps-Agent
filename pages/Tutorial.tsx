@@ -40,14 +40,16 @@ export const Tutorial: React.FC = () => {
             </p>
           </Step>
 
-          <Step num="2" title="Connect Data Sources">
+          <Step num="2" title="Link Firebase Project">
             <p>
-              DebugOps supports two modes of operation:
+              By default, the app runs in <strong>Demo Mode</strong> (data is lost on refresh). To enable real persistence:
             </p>
-            <ul className="list-disc pl-5 space-y-2">
-              <li><strong>Manual Mode:</strong> Paste stack traces or upload log files directly via the "Manual Input" button.</li>
-              <li><strong>Sentry Mode:</strong> Add your Sentry DSN in settings to automatically stream errors from your production app.</li>
-            </ul>
+            <ol className="list-decimal pl-5 space-y-2">
+              <li>Go to the <a href="https://console.firebase.google.com" target="_blank" rel="noopener noreferrer" className="text-ops-accent hover:underline">Firebase Console</a>.</li>
+              <li>Open your project and go to <strong>Project Settings</strong> (Gear Icon) &gt; <strong>General</strong>.</li>
+              <li>Scroll down to "Your apps" and copy the <code>firebaseConfig</code> object (or JSON).</li>
+              <li>Paste this into the <strong>Firebase Project Link</strong> section in the App Settings.</li>
+            </ol>
           </Step>
 
           <Step num="3" title="Reviewing Analysis">

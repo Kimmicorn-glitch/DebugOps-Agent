@@ -19,10 +19,26 @@ export const MOCK_ERRORS = [
   }
 ];
 
+// Helper to check for user-provided config in LocalStorage (Dynamic Linking)
+const getStoredFirebaseConfig = () => {
+  try {
+    const stored = localStorage.getItem('debugOps_firebaseConfig');
+    if (stored) {
+      return JSON.parse(stored);
+    }
+  } catch (e) {
+    console.warn("Failed to parse stored Firebase config", e);
+  }
+  return null;
+};
+
+const storedConfig = getStoredFirebaseConfig();
+
 // Configuration logic for Deployment
-// 1. Prioritize environment variables (Vite/CRA/Next standards)
-// 2. Fallback to placeholders for the Mock Mode
-export const FIREBASE_CONFIG = {
+// 1. LocalStorage (User entered via Settings UI)
+// 2. Environment variables (Build time)
+// 3. Fallback to placeholders for Mock Mode
+export const FIREBASE_CONFIG = storedConfig || {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY || process.env.VITE_FIREBASE_API_KEY || "PLACEHOLDER_API_KEY",
   authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN || process.env.VITE_FIREBASE_AUTH_DOMAIN || "debugops-demo.firebaseapp.com",
   projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID || process.env.VITE_FIREBASE_PROJECT_ID || "debugops-demo",

@@ -16,11 +16,13 @@ import { FIREBASE_CONFIG } from "../constants";
 // Checking for placeholder ensures we don't init with invalid config in Mock Mode
 if (getApps().length === 0 && FIREBASE_CONFIG.apiKey !== "PLACEHOLDER_API_KEY") {
   try {
-    initializeApp(FIREBASE_CONFIG);
-    console.log("Firebase Initialized for Production/Deployment");
+    const app = initializeApp(FIREBASE_CONFIG);
+    console.log(`[DebugOps] Successfully linked to Firebase Project: ${FIREBASE_CONFIG.projectId}`);
   } catch (e) {
-    console.warn("Firebase Init Skipped: Config likely invalid or incomplete.", e);
+    console.warn("[DebugOps] Firebase Init Failed: Config likely invalid.", e);
   }
+} else if (getApps().length === 0) {
+  console.log("[DebugOps] Running in Demo Mode (Mock Persistence). Link Firebase in Settings to go live.");
 }
 
 export interface UserProfile {

@@ -59,7 +59,7 @@ export const FAQ: React.FC = () => {
           />
           <FAQItem
             question="What programming languages are supported?"
-            answer="Currently, the agent is optimized for TypeScript, JavaScript, Python, and Go. Support for Rust and Java is coming in Q4 2024."
+            answer="Currently, the agent is optimized for TypeScript, JavaScript, Python, and Go. Support for Rust and Java is coming in Q4 2025."
           />
         </div>
       </div>

@@ -46,7 +46,7 @@ export const PublicLayout: React.FC = () => {
             <Link to="/privacy" className="hover:text-ops-text-main transition-colors">Privacy Policy</Link>
             <a href="mailto:support@debugops.ai" className="hover:text-ops-text-main transition-colors">Support</a>
           </div>
-          <p className="text-xs text-ops-text-dim">© 2024 DebugOps Inc. System Status: Normal.</p>
+          <p className="text-xs text-ops-text-dim">© 2025 DebugOps Inc. System Status: Normal.</p>
         </div>
       </footer>
     </div>
