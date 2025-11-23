@@ -147,10 +147,10 @@ export const NewIncidentModal: React.FC<NewIncidentModalProps> = ({ isOpen, onCl
         {/* Header */}
         <div className="flex justify-between items-center p-6 border-b border-ops-border">
           <div>
-            <h2 className="text-xl font-bold text-white">New Incident Report</h2>
-            <p className="text-xs text-slate-500 mt-1">Submit data for agent analysis</p>
+            <h2 className="text-xl font-bold text-ops-text-main">New Incident Report</h2>
+            <p className="text-xs text-ops-text-muted mt-1">Submit data for agent analysis</p>
           </div>
-          <button onClick={onClose} className="text-slate-500 hover:text-white transition-colors">
+          <button onClick={onClose} className="text-ops-text-muted hover:text-ops-text-main transition-colors">
             <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
             </svg>
@@ -171,7 +171,7 @@ export const NewIncidentModal: React.FC<NewIncidentModalProps> = ({ isOpen, onCl
               className={`flex-1 py-4 text-xs font-bold uppercase tracking-wider flex flex-col items-center gap-2 transition-all border-b-2
                 ${activeTab === tab.id 
                   ? 'text-ops-accent border-ops-accent bg-ops-panel' 
-                  : 'text-slate-500 border-transparent hover:text-slate-300 hover:bg-ops-panel/50'}`}
+                  : 'text-ops-text-muted border-transparent hover:text-ops-text-main hover:bg-ops-panel/50'}`}
             >
               <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={tab.icon} />
@@ -186,19 +186,19 @@ export const NewIncidentModal: React.FC<NewIncidentModalProps> = ({ isOpen, onCl
           
           {/* Common Title Input */}
           <div className="space-y-1">
-            <label className="text-xs font-mono font-bold text-slate-400 uppercase">Title / Summary</label>
+            <label className="text-xs font-mono font-bold text-ops-text-muted uppercase">Title / Summary</label>
             <input 
               type="text" 
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               placeholder="E.g. Database connection timeout or CSV Data Cleanup"
-              className="w-full bg-ops-bg border border-ops-border rounded p-3 text-white focus:border-ops-accent outline-none text-sm transition-colors"
+              className="w-full bg-ops-bg border border-ops-border rounded p-3 text-ops-text-main focus:border-ops-accent outline-none text-sm transition-colors"
             />
           </div>
 
           {/* Conditional Inputs */}
           <div className="space-y-1 flex-grow flex flex-col">
-            <label className="text-xs font-mono font-bold text-slate-400 uppercase">
+            <label className="text-xs font-mono font-bold text-ops-text-muted uppercase">
               {activeTab === 'url' ? 'Target URL' : 'Content / Context'}
             </label>
             
@@ -214,7 +214,7 @@ export const NewIncidentModal: React.FC<NewIncidentModalProps> = ({ isOpen, onCl
             {activeTab === 'url' && (
               <div className="flex gap-2">
                  <div className="relative flex-grow">
-                   <span className="absolute left-3 top-3 text-slate-500 font-mono text-sm">https://</span>
+                   <span className="absolute left-3 top-3 text-ops-text-muted font-mono text-sm">https://</span>
                    <input 
                      type="text"
                      value={content.replace(/^https?:\/\//, '')}
@@ -244,10 +244,10 @@ export const NewIncidentModal: React.FC<NewIncidentModalProps> = ({ isOpen, onCl
                   </svg>
                 </div>
                 <div className="text-center">
-                  <p className="text-sm font-medium text-slate-300">
+                  <p className="text-sm font-medium text-ops-text-main">
                     {fileName ? fileName : 'Click to Upload File'}
                   </p>
-                  <p className="text-xs text-slate-500 mt-1">Supported: .txt, .csv, .json, .log</p>
+                  <p className="text-xs text-ops-text-muted mt-1">Supported: .txt, .csv, .json, .log</p>
                 </div>
               </div>
             )}
@@ -262,7 +262,7 @@ export const NewIncidentModal: React.FC<NewIncidentModalProps> = ({ isOpen, onCl
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
                   </svg>
                 </button>
-                <p className={`text-sm font-mono ${isListening ? 'text-rose-400' : 'text-slate-500'}`}>
+                <p className={`text-sm font-mono ${isListening ? 'text-rose-400' : 'text-ops-text-muted'}`}>
                   {isListening ? 'Listening... Speak now' : 'Click microphone to record'}
                 </p>
                 {content && (
@@ -279,7 +279,7 @@ export const NewIncidentModal: React.FC<NewIncidentModalProps> = ({ isOpen, onCl
         <div className="p-6 border-t border-ops-border flex justify-end gap-3 bg-ops-panel/50 rounded-b-xl">
            <button 
              onClick={onClose}
-             className="px-6 py-2 text-sm font-bold text-slate-500 hover:text-white transition-colors"
+             className="px-6 py-2 text-sm font-bold text-ops-text-muted hover:text-ops-text-main transition-colors"
            >
              CANCEL
            </button>

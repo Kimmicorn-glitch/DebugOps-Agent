@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 const FlowBox: React.FC<{ icon: string; title: string; desc: string; color: string }> = ({ icon, title, desc, color }) => (
@@ -8,14 +8,14 @@ const FlowBox: React.FC<{ icon: string; title: string; desc: string; color: stri
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={icon} />
        </svg>
     </div>
-    <h3 className="text-lg font-bold text-white mb-2">{title}</h3>
-    <p className="text-sm text-slate-400">{desc}</p>
+    <h3 className="text-lg font-bold text-ops-text-main mb-2">{title}</h3>
+    <p className="text-sm text-ops-text-muted">{desc}</p>
   </div>
 );
 
 const ArrowDown: React.FC = () => (
   <div className="flex justify-center my-4 opacity-30">
-    <svg className="w-6 h-6 text-slate-400 animate-bounce" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <svg className="w-6 h-6 text-ops-text-dim animate-bounce" fill="none" viewBox="0 0 24 24" stroke="currentColor">
       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
     </svg>
   </div>
@@ -26,8 +26,8 @@ export const HowItWorks: React.FC = () => {
     <div className="py-20 px-6">
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-16">
-          <h1 className="text-4xl font-bold text-white mb-6">System Architecture</h1>
-          <p className="text-lg text-slate-400">
+          <h1 className="text-4xl font-bold text-ops-text-main mb-6">System Architecture</h1>
+          <p className="text-lg text-ops-text-muted">
             DebugOps sits between your production environment and your resolution workflow.
             Here is how the autonomous agent processes incidents in real-time.
           </p>
@@ -41,8 +41,8 @@ export const HowItWorks: React.FC = () => {
           {/* Step 1: Ingestion */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
             <div className="text-right hidden md:block">
-               <h3 className="text-xl font-bold text-white">1. Event Ingestion</h3>
-               <p className="text-slate-400 mt-2">Errors are captured via Sentry Webhooks, Firebase Listeners, or direct manual input.</p>
+               <h3 className="text-xl font-bold text-ops-text-main">1. Event Ingestion</h3>
+               <p className="text-ops-text-muted mt-2">Errors are captured via Sentry Webhooks, Firebase Listeners, or direct manual input.</p>
             </div>
             <FlowBox 
               title="Detection Layer" 
@@ -65,8 +65,8 @@ export const HowItWorks: React.FC = () => {
                />
             </div>
             <div className="text-left hidden md:block order-1 md:order-2">
-               <h3 className="text-xl font-bold text-white">2. Cognitive Diagnostics</h3>
-               <p className="text-slate-400 mt-2">The agent constructs a context window including the stack trace, environment variables, and relevant file snippets.</p>
+               <h3 className="text-xl font-bold text-ops-text-main">2. Cognitive Diagnostics</h3>
+               <p className="text-ops-text-muted mt-2">The agent constructs a context window including the stack trace, environment variables, and relevant file snippets.</p>
             </div>
           </div>
 
@@ -75,8 +75,8 @@ export const HowItWorks: React.FC = () => {
           {/* Step 3: Patch Generation */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
             <div className="text-right hidden md:block">
-               <h3 className="text-xl font-bold text-white">3. Solution Synthesis</h3>
-               <p className="text-slate-400 mt-2">Valid JSON patches are generated, complete with diffs, explanation, and severity assessment.</p>
+               <h3 className="text-xl font-bold text-ops-text-main">3. Solution Synthesis</h3>
+               <p className="text-ops-text-muted mt-2">Valid JSON patches are generated, complete with diffs, explanation, and severity assessment.</p>
             </div>
             <FlowBox 
               title="Patch Generator" 
@@ -99,14 +99,14 @@ export const HowItWorks: React.FC = () => {
                />
             </div>
             <div className="text-left hidden md:block order-1 md:order-2">
-               <h3 className="text-xl font-bold text-white">4. Resolution</h3>
-               <p className="text-slate-400 mt-2">The incident is marked as resolved, logs are updated, and the team is notified via dashboard.</p>
+               <h3 className="text-xl font-bold text-ops-text-main">4. Resolution</h3>
+               <p className="text-ops-text-muted mt-2">The incident is marked as resolved, logs are updated, and the team is notified via dashboard.</p>
             </div>
           </div>
         </div>
 
         <div className="mt-20 text-center">
-          <Link to="/demo" className="inline-flex items-center gap-2 text-ops-accent font-bold hover:text-white transition-colors">
+          <Link to="/demo" className="inline-flex items-center gap-2 text-ops-accent font-bold hover:text-ops-text-main transition-colors">
             See the Demo
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />

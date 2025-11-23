@@ -8,16 +8,16 @@ const FAQItem: React.FC<{ question: string; answer: string }> = ({ question, ans
         onClick={() => setIsOpen(!isOpen)}
         className="w-full py-5 px-6 flex items-center justify-between text-left focus:outline-none"
       >
-        <span className="font-bold text-lg text-slate-200">{question}</span>
+        <span className="font-bold text-lg text-ops-text-main">{question}</span>
         <svg 
-          className={`w-6 h-6 text-slate-500 transform transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`} 
+          className={`w-6 h-6 text-ops-text-dim transform transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`} 
           fill="none" viewBox="0 0 24 24" stroke="currentColor"
         >
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
         </svg>
       </button>
       <div className={`transition-all duration-300 ease-in-out ${isOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}`}>
-        <div className="px-6 pb-6 text-slate-400 leading-relaxed border-t border-ops-border/50 pt-4">
+        <div className="px-6 pb-6 text-ops-text-muted leading-relaxed border-t border-ops-border/50 pt-4">
           {answer}
         </div>
       </div>
@@ -30,8 +30,8 @@ export const FAQ: React.FC = () => {
     <div className="py-20 px-6">
       <div className="max-w-3xl mx-auto">
         <div className="text-center mb-16">
-          <h1 className="text-4xl font-bold text-white mb-6">Frequently Asked Questions</h1>
-          <p className="text-lg text-slate-400">
+          <h1 className="text-4xl font-bold text-ops-text-main mb-6">Frequently Asked Questions</h1>
+          <p className="text-lg text-ops-text-muted">
             Everything you need to know about DebugOps, billing, and security.
           </p>
         </div>

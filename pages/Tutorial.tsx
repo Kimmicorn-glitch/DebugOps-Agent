@@ -6,11 +6,11 @@ const Step: React.FC<{ num: string; title: string; children: React.ReactNode }> 
       <div className="w-10 h-10 rounded-full bg-ops-accent flex items-center justify-center text-white font-bold text-lg shadow-lg shadow-blue-500/20 z-10">
         {num}
       </div>
-      <div className="w-0.5 flex-grow bg-slate-800 my-2"></div>
+      <div className="w-0.5 flex-grow bg-slate-800 dark:bg-slate-700 bg-opacity-20 my-2"></div>
     </div>
     <div className="pb-12">
-      <h3 className="text-2xl font-bold text-white mb-4">{title}</h3>
-      <div className="text-slate-400 leading-relaxed text-lg space-y-4">
+      <h3 className="text-2xl font-bold text-ops-text-main mb-4">{title}</h3>
+      <div className="text-ops-text-muted leading-relaxed text-lg space-y-4">
         {children}
       </div>
     </div>
@@ -22,8 +22,8 @@ export const Tutorial: React.FC = () => {
     <div className="py-20 px-6">
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-16">
-          <h1 className="text-4xl font-bold text-white mb-6">Getting Started Guide</h1>
-          <p className="text-lg text-slate-400">
+          <h1 className="text-4xl font-bold text-ops-text-main mb-6">Getting Started Guide</h1>
+          <p className="text-lg text-ops-text-muted">
             A step-by-step tutorial to setting up your first autonomous debugging agent.
           </p>
         </div>
@@ -33,7 +33,7 @@ export const Tutorial: React.FC = () => {
           <Step num="1" title="Configure the Agent">
             <p>
               After logging in, click the <strong>Settings</strong> icon in the dashboard header.
-              You will need to provide a <code className="bg-slate-800 text-white px-1 py-0.5 rounded text-sm font-mono">Gemini API Key</code>.
+              You will need to provide a <code className="bg-[#0B0F19] text-white px-1 py-0.5 rounded text-sm font-mono border border-ops-border">Gemini API Key</code>.
             </p>
             <p className="text-sm bg-blue-500/10 border-l-4 border-blue-500 p-4 rounded-r">
               <strong>Note:</strong> We do not store your API key on our servers. It is kept in your browser's local storage for security.
