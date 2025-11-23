@@ -1,0 +1,5 @@
+{
+  "name": "DebugOps Agent",
+  "description": "A real-time AI-powered debugging platform that autonomously detects errors, diagnoses root causes using Gemini, and generates patches.",
+  "requestFramePermissions": []
+}
