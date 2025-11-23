@@ -13,11 +13,13 @@ import { initializeApp, getApps } from "firebase/app";
 import { FIREBASE_CONFIG } from "../constants";
 
 // Initialize Firebase if not already done (and if config exists)
+// Checking for placeholder ensures we don't init with invalid config in Mock Mode
 if (getApps().length === 0 && FIREBASE_CONFIG.apiKey !== "PLACEHOLDER_API_KEY") {
   try {
     initializeApp(FIREBASE_CONFIG);
+    console.log("Firebase Initialized for Production/Deployment");
   } catch (e) {
-    console.warn("Firebase Init Skipped: Config likely invalid for demo.");
+    console.warn("Firebase Init Skipped: Config likely invalid or incomplete.", e);
   }
 }
 
@@ -122,7 +124,8 @@ export const signInWithGoogle = async (): Promise<UserProfile> => {
       return result.user;
     } catch (error) {
       console.error("Firebase Auth Error:", error);
-      return MOCK_USER;
+      // In production, we might want to rethrow, but for a hybrid app we can fallback or alert
+      throw error;
     }
   } else {
     // Simulate network delay for mock login

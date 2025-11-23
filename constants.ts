@@ -19,14 +19,14 @@ export const MOCK_ERRORS = [
   }
 ];
 
-// In a real deployed app, these would be process.env.REACT_APP_FIREBASE_...
-// For this standalone demo, we will simulate the backend if no config is present,
-// OR use a provided API key for the Gemini Client.
+// Configuration logic for Deployment
+// 1. Prioritize environment variables (Vite/CRA/Next standards)
+// 2. Fallback to placeholders for the Mock Mode
 export const FIREBASE_CONFIG = {
-  apiKey: "PLACEHOLDER_API_KEY",
-  authDomain: "debugops-demo.firebaseapp.com",
-  projectId: "debugops-demo",
-  storageBucket: "debugops-demo.appspot.com",
-  messagingSenderId: "123456789",
-  appId: "1:123456789:web:abcdef"
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY || process.env.VITE_FIREBASE_API_KEY || "PLACEHOLDER_API_KEY",
+  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN || process.env.VITE_FIREBASE_AUTH_DOMAIN || "debugops-demo.firebaseapp.com",
+  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID || process.env.VITE_FIREBASE_PROJECT_ID || "debugops-demo",
+  storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET || process.env.VITE_FIREBASE_STORAGE_BUCKET || "debugops-demo.appspot.com",
+  messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID || process.env.VITE_FIREBASE_MESSAGING_SENDER_ID || "123456789",
+  appId: process.env.REACT_APP_FIREBASE_APP_ID || process.env.VITE_FIREBASE_APP_ID || "1:123456789:web:abcdef"
 };

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -7,7 +7,17 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script>
+      // Immediate theme application to prevent FOUC
+      if (localStorage.theme === 'light' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: light)').matches)) {
+        document.documentElement.classList.remove('dark');
+        document.documentElement.classList.add('light');
+      } else {
+        document.documentElement.classList.remove('light');
+        document.documentElement.classList.add('dark');
+      }
+
       tailwind.config = {
+        darkMode: 'class',
         theme: {
           extend: {
             fontFamily: {
@@ -16,13 +26,18 @@
             },
             colors: {
               ops: {
-                bg: '#0B0F19',
-                panel: '#151B2B',
-                border: '#2A3447',
-                accent: '#3B82F6',
+                bg: 'var(--ops-bg)',
+                panel: 'var(--ops-panel)',
+                border: 'var(--ops-border)',
+                accent: 'var(--ops-accent)',
                 success: '#10B981',
                 error: '#EF4444',
                 warning: '#F59E0B',
+                text: {
+                  main: 'var(--ops-text-main)',
+                  muted: 'var(--ops-text-muted)',
+                  dim: 'var(--ops-text-dim)',
+                }
               }
             }
           }
@@ -30,24 +45,48 @@
       }
     </script>
     <style>
-      body {
-        background-color: #0B0F19;
-        color: #E2E8F0;
+      :root {
+        /* Light Mode Defaults */
+        --ops-bg: #F8FAFC;
+        --ops-panel: #FFFFFF;
+        --ops-border: #E2E8F0;
+        --ops-accent: #3B82F6;
+        --ops-text-main: #0F172A;
+        --ops-text-muted: #475569;
+        --ops-text-dim: #94A3B8;
       }
+      
+      .dark {
+        /* Dark Mode Defaults */
+        --ops-bg: #0B0F19;
+        --ops-panel: #151B2B;
+        --ops-border: #2A3447;
+        --ops-accent: #3B82F6;
+        --ops-text-main: #E2E8F0;
+        --ops-text-muted: #94A3B8;
+        --ops-text-dim: #64748B;
+      }
+
+      body {
+        background-color: var(--ops-bg);
+        color: var(--ops-text-main);
+        transition: background-color 0.3s, color 0.3s;
+      }
+      
       /* Custom Scrollbar */
       ::-webkit-scrollbar {
         width: 8px;
         height: 8px;
       }
       ::-webkit-scrollbar-track {
-        background: #0B0F19;
+        background: var(--ops-bg);
       }
       ::-webkit-scrollbar-thumb {
-        background: #2A3447;
+        background: var(--ops-border);
         border-radius: 4px;
       }
       ::-webkit-scrollbar-thumb:hover {
-        background: #3B82F6;
+        background: var(--ops-accent);
       }
     </style>
   <script type="importmap">

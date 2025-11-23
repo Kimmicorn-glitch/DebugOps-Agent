@@ -142,9 +142,9 @@ export const Dashboard: React.FC = () => {
     }
   };
 
-  const handleSimulateError = () => {
+  const handleSimulateError = async () => {
     const randomTemplate = MOCK_ERRORS[Math.floor(Math.random() * MOCK_ERRORS.length)];
-    const newErr = db.addError(randomTemplate);
+    const newErr = await db.addError(randomTemplate);
     
     if (sentryDsn) {
       const mockException = new Error(randomTemplate.message);
@@ -163,8 +163,8 @@ export const Dashboard: React.FC = () => {
     }
   };
 
-  const handleNewIncident = (errorData: Omit<AppError, 'id' | 'timestamp' | 'status'>) => {
-    const newErr = db.addError(errorData);
+  const handleNewIncident = async (errorData: Omit<AppError, 'id' | 'timestamp' | 'status'>) => {
+    const newErr = await db.addError(errorData);
     setSelectedErrorId(newErr.id);
     setActiveTab('incidents');
     
@@ -206,16 +206,16 @@ export const Dashboard: React.FC = () => {
   if (!user) return null;
 
   return (
-    <div className="min-h-screen bg-ops-bg text-slate-300 font-sans selection:bg-ops-accent selection:text-white overflow-hidden flex flex-col">
+    <div className="min-h-screen bg-ops-bg text-ops-text-muted font-sans selection:bg-ops-accent selection:text-white overflow-hidden flex flex-col transition-colors duration-300">
       {/* Header */}
-      <header className="h-16 border-b border-ops-border bg-ops-bg flex items-center justify-between px-6 z-10 shadow-lg relative">
+      <header className="h-16 border-b border-ops-border bg-ops-bg flex items-center justify-between px-6 z-10 shadow-lg relative transition-colors duration-300">
         <div className="flex items-center gap-3">
           <div className="w-8 h-8 rounded bg-gradient-to-br from-blue-500 to-cyan-400 flex items-center justify-center text-white font-bold text-lg shadow-[0_0_15px_rgba(59,130,246,0.5)]">
             D
           </div>
           <div>
-            <h1 className="text-lg font-bold text-white tracking-tight">DebugOps</h1>
-            <div className="flex items-center gap-2 text-[10px] text-slate-500 font-mono">
+            <h1 className="text-lg font-bold text-ops-text-main tracking-tight">DebugOps</h1>
+            <div className="flex items-center gap-2 text-[10px] text-ops-text-dim font-mono">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
               SYSTEM ONLINE
             </div>
@@ -229,12 +229,12 @@ export const Dashboard: React.FC = () => {
             ) : (
               <div className="w-5 h-5 rounded-full bg-slate-600"></div>
             )}
-            <span className="text-xs text-slate-400 font-medium">{user.displayName}</span>
+            <span className="text-xs text-ops-text-muted font-medium">{user.displayName}</span>
           </div>
 
           <button 
             onClick={() => setIsIncidentModalOpen(true)}
-            className="px-4 py-2 text-xs font-bold text-white bg-emerald-500/10 border border-emerald-500/20 hover:bg-emerald-500/20 rounded-lg transition-colors flex items-center gap-2"
+            className="px-4 py-2 text-xs font-bold text-emerald-600 bg-emerald-500/10 border border-emerald-500/20 hover:bg-emerald-500/20 rounded-lg transition-colors flex items-center gap-2"
           >
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
@@ -244,7 +244,7 @@ export const Dashboard: React.FC = () => {
 
           <button 
             onClick={handleSimulateError}
-            className="px-4 py-2 text-xs font-bold text-white bg-rose-500/10 border border-rose-500/20 hover:bg-rose-500/20 rounded-lg transition-colors flex items-center gap-2 group"
+            className="px-4 py-2 text-xs font-bold text-rose-500 bg-rose-500/10 border border-rose-500/20 hover:bg-rose-500/20 rounded-lg transition-colors flex items-center gap-2 group"
           >
             <svg className="w-4 h-4 group-hover:rotate-90 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
@@ -254,7 +254,7 @@ export const Dashboard: React.FC = () => {
 
           <button
             onClick={() => setIsSettingsOpen(true)}
-            className="w-9 h-9 flex items-center justify-center text-slate-400 hover:text-white hover:bg-ops-panel rounded-lg transition-colors border border-transparent hover:border-ops-border ml-2"
+            className="w-9 h-9 flex items-center justify-center text-ops-text-muted hover:text-ops-text-main hover:bg-ops-panel rounded-lg transition-colors border border-transparent hover:border-ops-border ml-2"
           >
             <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
@@ -265,7 +265,7 @@ export const Dashboard: React.FC = () => {
           <button
             onClick={handleLogout}
             title="Sign Out"
-            className="w-9 h-9 flex items-center justify-center text-slate-400 hover:text-rose-400 hover:bg-ops-panel rounded-lg transition-colors border border-transparent hover:border-ops-border"
+            className="w-9 h-9 flex items-center justify-center text-ops-text-muted hover:text-rose-400 hover:bg-ops-panel rounded-lg transition-colors border border-transparent hover:border-ops-border"
           >
             <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
@@ -279,19 +279,19 @@ export const Dashboard: React.FC = () => {
         <div className="grid grid-cols-12 gap-4 h-full max-w-[1920px] mx-auto">
           
           {/* Column 1: Incident Feed & Health */}
-          <section className="col-span-12 md:col-span-4 lg:col-span-3 flex flex-col bg-ops-panel/20 rounded-xl border border-ops-border overflow-hidden backdrop-blur-sm">
+          <section className="col-span-12 md:col-span-4 lg:col-span-3 flex flex-col bg-ops-panel/20 rounded-xl border border-ops-border overflow-hidden backdrop-blur-sm transition-colors duration-300">
             
             {/* Tabs */}
             <div className="flex border-b border-ops-border">
                 <button 
                   onClick={() => setActiveTab('incidents')}
-                  className={`flex-1 py-3 text-xs font-bold uppercase tracking-wider transition-colors border-b-2 ${activeTab === 'incidents' ? 'text-ops-accent border-ops-accent bg-ops-panel/60' : 'text-slate-500 border-transparent hover:text-slate-300'}`}
+                  className={`flex-1 py-3 text-xs font-bold uppercase tracking-wider transition-colors border-b-2 ${activeTab === 'incidents' ? 'text-ops-accent border-ops-accent bg-ops-panel/60' : 'text-ops-text-muted border-transparent hover:text-ops-text-main'}`}
                 >
                   Incidents
                 </button>
                 <button 
                   onClick={() => setActiveTab('health')}
-                  className={`flex-1 py-3 text-xs font-bold uppercase tracking-wider transition-colors border-b-2 ${activeTab === 'health' ? 'text-ops-accent border-ops-accent bg-ops-panel/60' : 'text-slate-500 border-transparent hover:text-slate-300'}`}
+                  className={`flex-1 py-3 text-xs font-bold uppercase tracking-wider transition-colors border-b-2 ${activeTab === 'health' ? 'text-ops-accent border-ops-accent bg-ops-panel/60' : 'text-ops-text-muted border-transparent hover:text-ops-text-main'}`}
                 >
                   System Health
                 </button>
@@ -301,8 +301,8 @@ export const Dashboard: React.FC = () => {
               {activeTab === 'incidents' ? (
                  <div className="p-3">
                    {errors.length === 0 ? (
-                     <div className="h-64 flex flex-col items-center justify-center text-slate-600 space-y-2">
-                       <div className="w-12 h-12 rounded-full border-2 border-dashed border-slate-700 flex items-center justify-center">
+                     <div className="h-64 flex flex-col items-center justify-center text-ops-text-muted space-y-2">
+                       <div className="w-12 h-12 rounded-full border-2 border-dashed border-ops-text-dim flex items-center justify-center">
                          <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                          </svg>
@@ -327,15 +327,15 @@ export const Dashboard: React.FC = () => {
             
             {activeTab === 'incidents' && (
                <div className="p-2 border-t border-ops-border bg-ops-panel/30 text-center">
-                 <span className="text-[10px] font-mono text-slate-500">{errors.length} Active Incidents</span>
+                 <span className="text-[10px] font-mono text-ops-text-dim">{errors.length} Active Incidents</span>
                </div>
             )}
           </section>
 
           {/* Column 2: Agent Timeline */}
-          <section className="col-span-12 md:col-span-4 lg:col-span-4 flex flex-col bg-ops-panel/20 rounded-xl border border-ops-border overflow-hidden backdrop-blur-sm relative">
+          <section className="col-span-12 md:col-span-4 lg:col-span-4 flex flex-col bg-ops-panel/20 rounded-xl border border-ops-border overflow-hidden backdrop-blur-sm relative transition-colors duration-300">
             <div className="p-4 border-b border-ops-border bg-ops-panel/40">
-              <h2 className="text-xs font-bold uppercase tracking-wider text-slate-400">Agent Command Center</h2>
+              <h2 className="text-xs font-bold uppercase tracking-wider text-ops-text-muted">Agent Command Center</h2>
             </div>
             <div className="flex-grow overflow-hidden relative">
               {selectedErrorId ? (
@@ -357,7 +357,7 @@ export const Dashboard: React.FC = () => {
                   )}
                 </>
               ) : (
-                <div className="h-full flex flex-col items-center justify-center text-slate-600">
+                <div className="h-full flex flex-col items-center justify-center text-ops-text-muted">
                   <p className="text-sm">Select an incident to view agent telemetry</p>
                 </div>
               )}
@@ -365,9 +365,9 @@ export const Dashboard: React.FC = () => {
           </section>
 
           {/* Column 3: Patch Preview */}
-          <section className="col-span-12 md:col-span-4 lg:col-span-5 flex flex-col bg-ops-panel/20 rounded-xl border border-ops-border overflow-hidden backdrop-blur-sm">
+          <section className="col-span-12 md:col-span-4 lg:col-span-5 flex flex-col bg-ops-panel/20 rounded-xl border border-ops-border overflow-hidden backdrop-blur-sm transition-colors duration-300">
             <div className="p-4 border-b border-ops-border bg-ops-panel/40">
-               <h2 className="text-xs font-bold uppercase tracking-wider text-slate-400">Patch Solution</h2>
+               <h2 className="text-xs font-bold uppercase tracking-wider text-ops-text-muted">Patch Solution</h2>
             </div>
             <div className="flex-grow overflow-hidden">
                {selectedErrorId ? (
@@ -377,7 +377,7 @@ export const Dashboard: React.FC = () => {
                    isApplying={isApplying}
                  />
                ) : (
-                 <div className="h-full flex flex-col items-center justify-center text-slate-600">
+                 <div className="h-full flex flex-col items-center justify-center text-ops-text-muted">
                    <p className="text-sm">Waiting for analysis...</p>
                  </div>
                )}

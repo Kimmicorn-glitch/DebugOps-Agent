@@ -9,28 +9,31 @@ import { Demo } from './pages/Demo';
 import { Tutorial } from './pages/Tutorial';
 import { FAQ } from './pages/FAQ';
 import { PublicLayout } from './components/PublicLayout';
+import { ThemeProvider } from './contexts/ThemeContext';
 
 function App() {
   return (
-    <Router>
-      <Routes>
-        <Route element={<PublicLayout />}>
-          <Route path="/" element={<LandingPage />} />
-          <Route path="/how-it-works" element={<HowItWorks />} />
-          <Route path="/demo" element={<Demo />} />
-          <Route path="/tutorial" element={<Tutorial />} />
-          <Route path="/faq" element={<FAQ />} />
-          <Route path="/terms" element={<Legal />} />
-          <Route path="/privacy" element={<Legal />} />
-        </Route>
-        
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        
-        {/* Fallback */}
-        <Route path="*" element={<Navigate to="/" replace />} />
-      </Routes>
-    </Router>
+    <ThemeProvider>
+      <Router>
+        <Routes>
+          <Route element={<PublicLayout />}>
+            <Route path="/" element={<LandingPage />} />
+            <Route path="/how-it-works" element={<HowItWorks />} />
+            <Route path="/demo" element={<Demo />} />
+            <Route path="/tutorial" element={<Tutorial />} />
+            <Route path="/faq" element={<FAQ />} />
+            <Route path="/terms" element={<Legal />} />
+            <Route path="/privacy" element={<Legal />} />
+          </Route>
+          
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          
+          {/* Fallback */}
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+      </Router>
+    </ThemeProvider>
   );
 }
 
