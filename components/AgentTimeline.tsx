@@ -8,7 +8,7 @@ interface AgentTimelineProps {
 export const AgentTimeline: React.FC<AgentTimelineProps> = ({ logs }) => {
   if (logs.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center h-full text-slate-500 opacity-50">
+      <div className="flex flex-col items-center justify-center h-full text-ops-text-dim opacity-50">
         <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M19.428 15.428a2 2 0 00-1.022-.547l-2.384-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
         </svg>
@@ -19,7 +19,7 @@ export const AgentTimeline: React.FC<AgentTimelineProps> = ({ logs }) => {
 
   return (
     <div className="h-full overflow-y-auto p-4 space-y-6">
-      <h2 className="text-xs font-bold uppercase tracking-widest text-slate-500 mb-4 flex items-center gap-2">
+      <h2 className="text-xs font-bold uppercase tracking-widest text-ops-text-muted mb-4 flex items-center gap-2">
         <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
         Agent Activity
       </h2>
@@ -32,13 +32,13 @@ export const AgentTimeline: React.FC<AgentTimelineProps> = ({ logs }) => {
           `}></div>
           
           <div className="flex flex-col animate-in fade-in slide-in-from-bottom-2 duration-300">
-            <span className="text-xs font-mono text-slate-400 mb-1">
+            <span className="text-xs font-mono text-ops-text-dim mb-1">
               {new Date(log.timestamp).toLocaleTimeString()}
             </span>
-            <span className="text-sm font-semibold text-slate-200 mb-1">
+            <span className="text-sm font-semibold text-ops-text-main mb-1">
               {log.step}
             </span>
-            <p className="text-xs text-slate-400 bg-ops-panel/50 p-2 rounded border border-ops-border/50">
+            <p className="text-xs text-ops-text-muted bg-ops-panel/80 p-2 rounded border border-ops-border/50">
               {log.description}
             </p>
           </div>

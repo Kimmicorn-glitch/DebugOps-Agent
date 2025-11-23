@@ -22,23 +22,23 @@ export const ErrorCard: React.FC<ErrorCardProps> = ({ error, isSelected, onClick
         p-4 mb-3 rounded-lg border cursor-pointer transition-all duration-200
         ${isSelected 
           ? 'bg-ops-panel border-ops-accent shadow-[0_0_15px_rgba(59,130,246,0.1)]' 
-          : 'bg-ops-panel/50 border-ops-border hover:border-ops-accent/50'}
+          : 'bg-ops-panel/50 border-ops-border hover:border-ops-accent/50 hover:bg-ops-panel'}
       `}
     >
       <div className="flex justify-between items-start mb-2">
         <span className={`text-[10px] font-mono font-bold px-2 py-0.5 rounded border ${statusColors[error.status]}`}>
           {error.status}
         </span>
-        <span className="text-xs text-slate-500 font-mono">
+        <span className="text-xs text-ops-text-dim font-mono">
           {new Date(error.timestamp).toLocaleTimeString()}
         </span>
       </div>
       
-      <h3 className="text-sm font-medium text-slate-200 mb-1 line-clamp-2">
+      <h3 className="text-sm font-medium text-ops-text-main mb-1 line-clamp-2">
         {error.message}
       </h3>
       
-      <p className="text-xs text-slate-500 font-mono truncate">
+      <p className="text-xs text-ops-text-muted font-mono truncate">
         {error.sourceFile}
       </p>
     </div>

@@ -138,38 +138,46 @@ export const Dashboard: React.FC = () => {
       });
       console.error(err);
       db.updateErrorStatus(errorToProcess.id, ErrorStatus.OPEN);
-      SentryService.captureError(err as Error, { context: "Gemini Analysis" });
+      // SentryService.captureError(err as Error, { context: "Gemini Analysis" });
     }
   };
 
   const handleSimulateError = async () => {
     const randomTemplate = MOCK_ERRORS[Math.floor(Math.random() * MOCK_ERRORS.length)];
-    const newErr = await db.addError(randomTemplate);
-    
-    if (sentryDsn) {
-      const mockException = new Error(randomTemplate.message);
-      mockException.stack = randomTemplate.stackTrace;
-      SentryService.captureError(mockException, { 
-        file: randomTemplate.sourceFile,
-        simulated: true 
-      });
-    }
+    try {
+      const newErr = await db.addError(randomTemplate);
+      
+      if (sentryDsn) {
+        const mockException = new Error(randomTemplate.message);
+        mockException.stack = randomTemplate.stackTrace;
+        SentryService.captureError(mockException, { 
+          file: randomTemplate.sourceFile,
+          simulated: true 
+        });
+      }
 
-    setSelectedErrorId(newErr.id);
-    setActiveTab('incidents');
+      setSelectedErrorId(newErr.id);
+      setActiveTab('incidents');
 
-    if (autoAnalyze && apiKey) {
-      handleRunAgent(newErr);
+      if (autoAnalyze && apiKey) {
+        handleRunAgent(newErr);
+      }
+    } catch (e) {
+        console.error("Error adding simulated error", e);
     }
   };
 
   const handleNewIncident = async (errorData: Omit<AppError, 'id' | 'timestamp' | 'status'>) => {
-    const newErr = await db.addError(errorData);
-    setSelectedErrorId(newErr.id);
-    setActiveTab('incidents');
-    
-    if (autoAnalyze && apiKey) {
-      handleRunAgent(newErr);
+    try {
+        const newErr = await db.addError(errorData);
+        setSelectedErrorId(newErr.id);
+        setActiveTab('incidents');
+        
+        if (autoAnalyze && apiKey) {
+          handleRunAgent(newErr);
+        }
+    } catch (e) {
+        console.error("Error adding incident", e);
     }
   };
 
@@ -279,7 +287,7 @@ export const Dashboard: React.FC = () => {
         <div className="grid grid-cols-12 gap-4 h-full max-w-[1920px] mx-auto">
           
           {/* Column 1: Incident Feed & Health */}
-          <section className="col-span-12 md:col-span-4 lg:col-span-3 flex flex-col bg-ops-panel/20 rounded-xl border border-ops-border overflow-hidden backdrop-blur-sm transition-colors duration-300">
+          <section className="col-span-12 md:col-span-4 lg:col-span-3 flex flex-col bg-ops-panel/60 rounded-xl border border-ops-border overflow-hidden backdrop-blur-sm transition-colors duration-300">
             
             {/* Tabs */}
             <div className="flex border-b border-ops-border">
@@ -333,7 +341,7 @@ export const Dashboard: React.FC = () => {
           </section>
 
           {/* Column 2: Agent Timeline */}
-          <section className="col-span-12 md:col-span-4 lg:col-span-4 flex flex-col bg-ops-panel/20 rounded-xl border border-ops-border overflow-hidden backdrop-blur-sm relative transition-colors duration-300">
+          <section className="col-span-12 md:col-span-4 lg:col-span-4 flex flex-col bg-ops-panel/60 rounded-xl border border-ops-border overflow-hidden backdrop-blur-sm relative transition-colors duration-300">
             <div className="p-4 border-b border-ops-border bg-ops-panel/40">
               <h2 className="text-xs font-bold uppercase tracking-wider text-ops-text-muted">Agent Command Center</h2>
             </div>
@@ -365,7 +373,7 @@ export const Dashboard: React.FC = () => {
           </section>
 
           {/* Column 3: Patch Preview */}
-          <section className="col-span-12 md:col-span-4 lg:col-span-5 flex flex-col bg-ops-panel/20 rounded-xl border border-ops-border overflow-hidden backdrop-blur-sm transition-colors duration-300">
+          <section className="col-span-12 md:col-span-4 lg:col-span-5 flex flex-col bg-ops-panel/60 rounded-xl border border-ops-border overflow-hidden backdrop-blur-sm transition-colors duration-300">
             <div className="p-4 border-b border-ops-border bg-ops-panel/40">
                <h2 className="text-xs font-bold uppercase tracking-wider text-ops-text-muted">Patch Solution</h2>
             </div>

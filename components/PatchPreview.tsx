@@ -10,18 +10,18 @@ interface PatchPreviewProps {
 export const PatchPreview: React.FC<PatchPreviewProps> = ({ patch, onApply, isApplying }) => {
   if (!patch) {
     return (
-      <div className="flex flex-col items-center justify-center h-full text-slate-500 border-2 border-dashed border-ops-border rounded-lg m-4">
-        <span className="text-sm">No patch generated yet.</span>
+      <div className="flex flex-col items-center justify-center h-full text-ops-text-muted border-2 border-dashed border-ops-border rounded-lg m-4">
+        <span className="text-sm font-medium">No patch generated yet.</span>
         <span className="text-xs opacity-70">Run diagnostics to generate fix.</span>
       </div>
     );
   }
 
   const severityColor = {
-    [Severity.LOW]: 'text-blue-400',
-    [Severity.MEDIUM]: 'text-yellow-400',
-    [Severity.HIGH]: 'text-orange-400',
-    [Severity.CRITICAL]: 'text-red-500',
+    [Severity.LOW]: 'text-blue-500',
+    [Severity.MEDIUM]: 'text-yellow-500',
+    [Severity.HIGH]: 'text-orange-500',
+    [Severity.CRITICAL]: 'text-rose-500',
   };
 
   return (
@@ -29,29 +29,29 @@ export const PatchPreview: React.FC<PatchPreviewProps> = ({ patch, onApply, isAp
       
       {/* Header Info */}
       <div className="grid grid-cols-2 gap-4">
-        <div className="p-4 rounded bg-ops-panel border border-ops-border">
-          <h4 className="text-xs text-slate-500 uppercase tracking-wide mb-2">Root Cause</h4>
-          <p className="text-sm text-slate-200">{patch.root_cause}</p>
+        <div className="p-4 rounded bg-ops-panel border border-ops-border shadow-sm">
+          <h4 className="text-xs text-ops-text-muted uppercase tracking-wide mb-2">Root Cause</h4>
+          <p className="text-sm text-ops-text-main font-medium">{patch.root_cause}</p>
         </div>
-        <div className="p-4 rounded bg-ops-panel border border-ops-border">
-          <h4 className="text-xs text-slate-500 uppercase tracking-wide mb-2">Severity</h4>
+        <div className="p-4 rounded bg-ops-panel border border-ops-border shadow-sm">
+          <h4 className="text-xs text-ops-text-muted uppercase tracking-wide mb-2">Severity</h4>
           <p className={`text-sm font-bold ${severityColor[patch.severity]}`}>{patch.severity}</p>
         </div>
       </div>
 
       {/* Explanation */}
       <div>
-         <h4 className="text-xs text-slate-500 uppercase tracking-wide mb-2">Agent Explanation</h4>
-         <p className="text-sm text-slate-300 leading-relaxed bg-ops-panel/30 p-3 rounded">{patch.explanation}</p>
+         <h4 className="text-xs text-ops-text-muted uppercase tracking-wide mb-2">Agent Explanation</h4>
+         <p className="text-sm text-ops-text-main leading-relaxed bg-ops-panel/50 border border-ops-border p-3 rounded">{patch.explanation}</p>
       </div>
 
       {/* Code Patch */}
       <div className="flex-grow flex flex-col min-h-[200px]">
-        <h4 className="text-xs text-slate-500 uppercase tracking-wide mb-2 flex justify-between">
+        <h4 className="text-xs text-ops-text-muted uppercase tracking-wide mb-2 flex justify-between">
           <span>Proposed Patch</span>
-          <span className="text-slate-400 normal-case font-mono text-[10px]">{patch.files_to_modify.join(', ')}</span>
+          <span className="text-ops-text-dim normal-case font-mono text-[10px]">{patch.files_to_modify.join(', ')}</span>
         </h4>
-        <div className="flex-grow bg-[#0d1117] rounded-lg border border-ops-border p-4 font-mono text-xs overflow-x-auto relative group">
+        <div className="flex-grow bg-[#0d1117] rounded-lg border border-ops-border p-4 font-mono text-xs overflow-x-auto relative group shadow-inner">
           <pre className="text-emerald-400 whitespace-pre-wrap">{patch.patch}</pre>
           <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
             <span className="text-[10px] bg-slate-700 text-white px-2 py-1 rounded">Diff View</span>
@@ -61,8 +61,8 @@ export const PatchPreview: React.FC<PatchPreviewProps> = ({ patch, onApply, isAp
 
       {/* Next Steps */}
       <div>
-         <h4 className="text-xs text-slate-500 uppercase tracking-wide mb-2">Recommended Next Steps</h4>
-         <ul className="list-disc list-inside text-sm text-slate-400 space-y-1">
+         <h4 className="text-xs text-ops-text-muted uppercase tracking-wide mb-2">Recommended Next Steps</h4>
+         <ul className="list-disc list-inside text-sm text-ops-text-muted space-y-1">
            {patch.next_steps.map((step, i) => (
              <li key={i}>{step}</li>
            ))}
@@ -77,7 +77,7 @@ export const PatchPreview: React.FC<PatchPreviewProps> = ({ patch, onApply, isAp
           w-full py-4 rounded-lg font-bold text-sm uppercase tracking-wider transition-all
           flex items-center justify-center gap-2
           ${isApplying 
-            ? 'bg-slate-700 text-slate-400 cursor-not-allowed' 
+            ? 'bg-ops-panel text-ops-text-muted border border-ops-border cursor-not-allowed' 
             : 'bg-emerald-600 hover:bg-emerald-500 text-white shadow-lg hover:shadow-emerald-500/20'}
         `}
       >
